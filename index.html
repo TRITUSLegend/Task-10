@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timer</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #eaf3fa;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #456b6d;
+      margin-bottom: 20px;
+    }
+
+    #timer {
+      font-size: 48px;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #start {
+      background-color: #7fbfa1;
+      color: white;
+    }
+
+    #stop {
+      background-color: #e63946;
+      color: white;
+    }
+
+    #reset {
+      background-color: #b2e5a1;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>TIMER</h1>
+  <div id="timer">25 : 00</div>
+
+  <div class="buttons">
+    <button id="start">START</button>
+    <button id="stop">STOP</button>
+    <button id="reset">RESET</button>
+  </div>
+
+  <script>
+    let time = 1500;
+    let interval = null;
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      document.getElementById("timer").textContent =
+        `${minutes.toString().padStart(2, '0')} : ${seconds.toString().padStart(2, '0')}`;
+    }
+
+    document.getElementById("start").addEventListener("click", function () {
+      if (interval) return;
+      interval = setInterval(() => {
+        if (time > 0) {
+          time--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(interval);
+        }
+      }, 1000);
+    });
+
+    document.getElementById("stop").addEventListener("click", function () {
+      clearInterval(interval);
+      interval = null;
+    });
+
+    document.getElementById("reset").addEventListener("click", function () {
+      clearInterval(interval);
+      interval = null;
+      time = 1500;
+      updateTimerDisplay();
+    });
+
+    updateTimerDisplay();
+  </script>
+
+</body>
+</html>
